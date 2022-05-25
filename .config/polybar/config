@@ -1,118 +1,175 @@
-;; ======================================= POLYBAR CONFIG ====================================
-[colors]
-background = #2E3440
-foreground = #e6e6e6
-accent     = #88C0D0
-black       = ${xrdb:Polybar.color0}
-red         = ${xrdb:Polybar.color1}
-green       = ${xrdb:Polybar.color2}
-yellow      = ${xrdb:Polybar.color3}
-blue        = ${xrdb:Polybar.color4}
-magenta     = ${xrdb:Polybar.color5}
-cyan        = ${xrdb:Polybar.color6}
-white       = ${xrdb:Polybar.color7}
+# ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗  Author: ThePiGuy 
+# ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗ ASCI-Theme: ANSI Shadow
+# ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝ 
+# ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗ 
+# ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║ 
+# ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+     
 
-;; ===================== BARS ========================
+[color]
+
+#nope		= #e647607d
+
+bg 		= #e639465c
+fg 		= #ffffff
+
+acolor 		= #dedede
+acolor1 	= #8f8f8f
+
+work 		= #85afd6
+work2		= #6888a3
+
+curgent 	= #EF5350
+coccupied 	= #42A5F5
+
+workspaces 	= #dbdbde
+network 	= #8DDDC9
+nonetwork 	= #f28d8d
+time 		= #F8BBFF
+date		= #A2CFFE
+
+# not a color but EHHH
+net 		= enp0s3 
+
+;------------------------------
+;          BAR/MAIN
+;------------------------------
+
 [bar/main]
-bottom = false
-offset-y = 10
-height = 30
-radius = 12
-fixed-center = true
-wm-restack = bspwm
-override-redirect = true
-border = 0
+width 		= 100%
+height 		= 30
+offset-x 	= 0
+offset-y 	= 0
+bottom 		= false
+fixed-center 	= true
+line-size 	= 5
+background 	= ${color.bg}
+foreground 	= ${color.fg}
 
-background = ${colors.background}
-foreground = ${colors.foreground}
+tray-position 	= left 
 
-font-0 = termsyn:size=14;3
-font-1 = Roboto Mono NerdFont:size=11:antialias=true;3
+spacing 	= 0
+module-margin 	= 1 
+padding 	= 0
 
-module-margin-left = 2
-module-margin-right = 2
+enable-ipc 	= true
+cursor-click 	= pointer
 
-[bar/one]
-inherit = bar/main
-width = 13%
-offset-x = 16
-modules-center = workspaces
+wm-restack 	= bspwm
 
-[bar/two]
-inherit = bar/main
-width = 24.2%
-offset-x = 1633
-modules-center = date cpu pulseaudio 
+;--------------- FONT ---------------
 
-;; =================== BSPWM =====================
-[module/bspwm]
-type = internal/bspwm
+font-0 	= "Fira Code:pixelsize=9;3"
+font-1 	= "Fira Code:pixelsize=12;3"
+font-2 	= "Font Awesome 5 Free:pixelsize=10;3"
 
-pin-workspaces = true
-enable-click = true
-enable-scroll = true
+font-3	= "Terminus:pixelsize=23;5"
+font-4 	= "Iosevka Nerd Font:pixelsize=8.7;2.9"
+font-5 	= "Font Awesome 5 Free:pixelsize=23;5"
+font-6 	= "Iosevka Nerd Font:pixelsize=9;4"
 
-format = <label-state>
+;------------------------------
+;           MODULES
+;------------------------------
 
-format-background = ${colors.background}
-format-foreground = ${colors.foreground}
+modules-left 	= workspaces
+modules-center 	= xwindow 
+modules-right 	= audio network date time 
 
-label-monitor = %name%
+[module/xwindow]
+type 	= internal/xwindow
+label 	= %title%
 
-label-focused = 
-label-focused-padding = 2
-label-focused-foreground = ${colors.accent}
-label-focused-background = ${colors.background}
+[module/workspaces]
+type 			= internal/xworkspaces
 
-label-occupied = 
-label-occupied-padding = 2
-label-occupied-foreground = ${colors.foreground}
-label-occupied-background = ${colors.background}
+pin-workspaces 		= true
+enable-click 		= true
+enable-scroll 		= true
 
-label-urgent = 
-label-urgent-padding = 2
-label-urgent-foreground = ${colors.red}
+format-padding 		= 0
+format 			= %{T2}<label-state>%{T-}
+format-foreground	= ${color.work}
+format-background 	= ${color.bg}
 
-label-empty = 
-label-empty-padding = 2
-label-empty-foreground = ${colors.black}
-label-empty-background = ${colors.background}
+icon-0 			= I;1
+icon-1 			= II;2
+icon-2 			= III;3
+icon-3 			= IV;4
+icon-4 			= V;5
+icon-5 			= VI;6
+icon-6 			= VII;7
+icon-7 			= VIII;8
+icon-8 			= IX;9
+icon-9 			= X;0
 
-;; =================== PULSEAUDIO =====================
+icon-default 		= X 
 
-[module/pulseaudio]
-type = internal/pulseaudio
+label-active 		= %icon%
+label-occupied 		= %icon% 
+label-urgent 		= %icon% 
+label-empty		= %icon%
 
-format-volume = "<ramp-volume>  <label-volume>"
 
-label-volume =  "%percentage%%"
-label-volume-background = ${colors.background}
-label-volume-foreground = ${colors.foreground}
+label-empty-padding 	= 1
+label-active-padding 	= 1
+label-urgent-padding 	= 1
+label-occupied-padding 	= 1
 
-label-muted = MUTED
-label-muted-foreground = ${colors.red}
-label-muted-background = ${colors.background}
+label-empty-foreground 	= ${color.workspaces}
+label-active-background = ${color.work2}
+label-active-foreground = ${color.workspaces}
+label-urgent-foreground = ${color.curgent}
+label-occupied-foreground = ${color.work}
 
-ramp-volume-0 =  
-ramp-volume-1 =  
-ramp-volume-2 =  
-ramp-volume-3 =  
+;---------------- RIGHT ---------------------
 
-ramp-volume-foreground = ${colors.accent}
-ramp-volume-background = ${colors.background}
+[module/audio]
+type 				= internal/pulseaudio
 
-;; =================== TIME =====================
+sink 				= alsa_output.pci-0000_00_05.0.analog-stereo
+use-ui-max 			= false
+interval 			= 5
+
+format-volume 			= %{T2}[<ramp-volume> = <label-volume>]%{T-}
+format-volume-foreground 	= #f2d58d
+
+label-muted 			= %{T2}[婢 = --%]%{T-}
+label-muted-foreground 		= ${color.nonetwork}
+
+ramp-volume-0 			= 奄 
+ramp-volume-1 			= 奔
+ramp-volume-2 			= 墳
+
+click-right 			= pavucontrol
+
+[module/network]
+type 				= internal/network
+interface 			= ${color.net} 
+interval 			= 30
+
+format-connected 		= <label-connected>
+format-connected-foreground 	= ${color.network}
+format-disconnected 		= %{T2}[ = N/A]%{T-} 
+format-disconnected-foreground 	= ${color.nonetwork} 
+
+label-connected 		= %{T2}[ﯱ = %ifname%]%{T-}
+
+[module/date]
+type 			= internal/date
+interval 		= 1.0
+label 			= %date%
+label-padding-left 	= 0
+label-background 	= ${color.bg}
+label-foreground 	= ${color.date}
+date 			= %{T2}[ = %a %d/%m]%{T-}
+date-alt 		= %{T2}[ =%d/%m/%Y]%{T-}
 
 [module/time]
-type = internal/date
-interval = 1
-date = %a, %d %B
-time = %I:%M %
-format-prefix = 
-format-prefix-foreground = ${colors.accent}
-format = <label>
-label = "  %date% | %time% "
-format-background = ${colors.background}
-format-foreground = ${colors.foreground}
-
-;; ================= EOF =======================
+type 			= internal/date
+interval 		= 1.0
+label 			=  %time%
+label-background 	= ${color.bg}
+label-foreground 	= ${color.time}
+time 			= %{T2}[ = %I:%M %p]%{T-}
+time-alt 		= %{T2}[ = %H:%M:%S]%{T-}
